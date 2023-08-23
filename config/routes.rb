@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions' }
-  root 'time_entries#index'
+
+  resources :departments
+  resources :workers do
+
+    resources :time_entries do
+
+      resources :breaks
+      
+    end
+  end
+
+  root "workers#index"
+
 end
