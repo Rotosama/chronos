@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_145213) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_085533) do
   create_table "breaks", force: :cascade do |t|
     t.integer "time_entry_id"
     t.time "start_time"
@@ -19,6 +19,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_145213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["time_entry_id"], name: "index_breaks_on_time_entry_id"
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_departments_on_user_id"
   end
 
   create_table "time_entries", force: :cascade do |t|
@@ -39,10 +47,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_145213) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "last_name"
+    t.string "dni"
+    t.integer "department"
+    t.date "birthdate"
+    t.date "start_date"
+    t.date "finish_date"
+    t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "breaks", "time_entries"
+  add_foreign_key "departments", "users"
   add_foreign_key "time_entries", "users"
 end
