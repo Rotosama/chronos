@@ -1,4 +1,6 @@
 class Worker < ApplicationRecord
+  has_many :time_entries
+  has_one :department
   
   validates :name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }

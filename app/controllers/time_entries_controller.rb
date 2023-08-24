@@ -1,10 +1,12 @@
 class TimeEntriesController < ApplicationController
+  before_action :set_worker
+
   def index
-    @time_entry = TimeEntry.all
+    @time_entry = TimeEntry.where(worker_id: @worker.id)
   end
 
   def show
-    @time_entry  = TimeEntry.find(params[:id])
+    @time_entry  = TimeEntry
   end
 
   def new
@@ -21,5 +23,11 @@ class TimeEntriesController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def set_worker
+    @worker = Worker.find(params[:worker_id])
   end
 end

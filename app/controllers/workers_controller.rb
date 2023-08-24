@@ -7,6 +7,9 @@ class WorkersController < ApplicationController
 
   def show
     @worker  = Worker.find(params[:id])
+    @time_entries = @worker.time_entries
+    @department = Department.find(@worker.department_id).name
+
   end
 
   def new
@@ -27,6 +30,7 @@ class WorkersController < ApplicationController
 
   def edit
     @worker  = Worker.find(params[:id])
+    @departments = Department.all
 
   end
 
@@ -43,13 +47,13 @@ class WorkersController < ApplicationController
     @worker = Worker.find(params[:id])
     @worker.destroy
 
-    redirect_to worker_path
+    redirect_to workers_path
   end
 
   private
 
   def worker_params
     params.require(:worker).
-    permit(:name, :last_name, :dni, :department_id, :birthdate, :start_date, :finish_date)
+    permit(:name, :last_name, :dni, :department_id, :birthdate, :role, :start_date, :finish_date)
   end
 end
