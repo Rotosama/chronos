@@ -1,6 +1,8 @@
 class WorkersController < ApplicationController
+
   def index
     @workers = Worker.all
+    @departments = Department.all
   end
 
   def show
@@ -9,9 +11,12 @@ class WorkersController < ApplicationController
 
   def new
     @worker = Worker.new
+    @departments = Department.all
+
   end
 
   def create
+    @departments = Department.all
     @worker = Worker.new(worker_params)
     if @worker.save
       redirect_to @worker
@@ -45,6 +50,6 @@ class WorkersController < ApplicationController
 
   def worker_params
     params.require(:worker).
-    permit(:email, :password, :name, :last_name, :dni, :department, :birthdate, :start_date, :finish_date)
+    permit(:name, :last_name, :dni, :department_id, :birthdate, :start_date, :finish_date)
   end
 end

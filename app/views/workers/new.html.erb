@@ -1,2 +1,67 @@
-<h1>Workers#new</h1>
-<p>Find me in app/views/workers/new.html.erb</p>
+<h1 class= "my-5">Registrar trabajador</h1>
+
+<%= form_with model: @worker do |f| %>
+
+  <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <%= f.text_field :name, class: "form-control", placeholder: "name" %>
+        <%= f.label :Nombre %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <%= f.text_field :last_name, class: "form-control", placeholder: "last_name" %>
+        <%= f.label :Apellidos %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.text_field :dni, class: "form-control", placeholder: "dni" %>
+        <%= f.label :DNI %>
+      </div>
+    </div>
+    <div class="col-md-4">
+    <div class="form-floating mb-3">
+      <%= f.collection_select :department_id, @departments, :id, :name, { prompt: "Selecciona un departamento" }, class: "form-select", id: "floatingSelectGrid" %>
+      <%= f.label :Departamento, "for" => "floatingSelectGrid" %>
+    </div>
+  
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.date_field :birthdate, class: "form-select", placeholder: "birthdate" %>
+        <%= f.label :fecha_de_nacimiento %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.date_field :start_date, class: "form-control", placeholder: "dni" %>
+        <%= f.label :fecha_inicio_contrato %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.date_field :finish_date, class: "form-control", placeholder: "department" %>
+        <%= f.label :fecha_fin_contrato %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.hidden_field :role, class: "form-control", placeholder: "department", value: 1 %>
+      </div>
+    </div>
+  </div>   
+
+  <div class="form-group">
+    <%= f.submit "Agregar Trabajador", class: "btn btn-primary" %>
+  </div>
+    <% end %>
+  </div>
+    
