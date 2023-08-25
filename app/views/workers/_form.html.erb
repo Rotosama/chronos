@@ -58,7 +58,7 @@
     </div>   
 
     <div class="form-group">
-      <%= f.submit "Agregar Trabajador", class: "btn btn-primary" %>
+      <%= f.submit (@worker.new_record? ? "Agregar Trabajador" : "Modificar" ), class: "btn btn-primary" %>
     </div>  
   </div>
   <% end %>

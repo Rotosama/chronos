@@ -1,4 +1,4 @@
 class Department < ApplicationRecord
-  belongs_to :workers
+  has_many :workers
   validates :name, presence: true
 end

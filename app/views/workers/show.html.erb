@@ -1,16 +1,6 @@
 <h1><%= @worker.name %> <%= @worker.last_name %></h1>
 
 
-<%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker) , class:"btn btn-success" %>
-<% @time_entries.each do |te| %>
-  <%=  te.start_date %>
-
-<% end %>
-
-
-<%= link_to "Volver", workers_path, class: "btn btn-secondary" %>
-
-
 <div class="card" >
 <div class="card-header"><%= @worker.name %> <%= @worker.last_name %></div>
   <div class="card-body">
@@ -20,3 +10,13 @@
     <%= link_to "Eliminar trabajador", worker_path(@worker),data: { turbo_method: :delete}, class: "btn btn-danger" %>
   </div>
 </div>
+
+<%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker) , class:"btn btn-success" %>
+
+<% @time_entries.each do |te| %>
+  <%=  te.start_date %>
+<% end %>
+
+<%= link_to "Volver", workers_path, class: "btn btn-secondary" %>
+
+

@@ -2,7 +2,7 @@ class TimeEntriesController < ApplicationController
   before_action :set_worker
 
   def index
-    @time_entry = TimeEntry.where(worker_id: @worker.id)
+    @time_entries = TimeEntry.where(worker_id: @worker.id)
   end
 
   def show
