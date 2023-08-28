@@ -14,10 +14,10 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
-    @time_entry = TimeEntry.new(time_entry_params)
+    @time_entry = TimeEntry.new(time_entries_params)
     @time_entry.worker_id = @worker.id
     if @time_entry.save
-      redirect_to worker_time_entries_path(@worker, @time_entry)
+      redirect_to worker_path(@worker)
     else
       render :new, status: :unprocessable_entity
     end

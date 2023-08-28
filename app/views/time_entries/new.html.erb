@@ -1,4 +1,4 @@
-<%= form_with model: @time_entry do |f| %>
+<%= form_with model: [@worker, @time_entry] do |f| %>
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="form-group">
-      <%= f.submit (@time_entry.new_record? ? "Iniciar Jornada" : "Modificar"), class: "btn btn-primary" %>
+      <%= f.submit "Iniciar Jornada", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>

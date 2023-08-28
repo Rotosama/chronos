@@ -11,10 +11,10 @@
   </div>
 </div>
 
-<%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker) , class:"btn btn-success" %>
+<%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker), class:"btn btn-success" %>
 
 <% @time_entries.each do |te| %>
-  <%=  te.start_date %>
+  <%=  te.entry_date %>
 <% end %>
 
 <%= link_to "Volver", workers_path, class: "btn btn-secondary" %>

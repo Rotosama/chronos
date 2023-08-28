@@ -3,7 +3,5 @@ class TimeEntry < ApplicationRecord
   has_many :breaks
 
   validates :entry_date, presence: true
-  validates :entry_time, presence: true
-  validates :exit_time, presence: true
-  validates :entry_time, comparison: { greater_than: :exit_time }
+  validates :exit_date, presence: true
 end
