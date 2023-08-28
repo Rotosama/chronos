@@ -1,2 +1,21 @@
-<h1>TimeEntries#new</h1>
-<p>Find me in app/views/time_entries/new.html.erb</p>
+<%= form_with model: @time_entry do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <%= f.datetime_field :entry_date, class: "form-control", placeholder: "entry_date" %>
+          <%= f.label :entrada %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <%= f.datetime_field :exit_date, class: "form-control", placeholder: "exit_date" %>
+          <%= f.label :salida %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.submit (@time_entry.new_record? ? "Iniciar Jornada" : "Modificar"), class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

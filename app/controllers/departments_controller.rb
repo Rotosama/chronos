@@ -10,9 +10,9 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new(department_params)
     if @department.save
-      redirect_to @department
+      redirect_to departments_path
     else
-      render :new status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -33,5 +33,11 @@ class DepartmentsController < ApplicationController
     @department = Department.find(params[:id])
     @department.destroy
     redirect_to departments_path
+  end
+
+  private
+
+  def department_params
+    params.require(:department).permit(:name)
   end
 end

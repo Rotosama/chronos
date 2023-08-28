@@ -1,2 +1,18 @@
-<h1>Departments#index</h1>
-<p>Find me in app/views/departments/index.html.erb</p>
+<h1 class= "my-5">Todos los departamentos</h1>
+
+<% @departments.each do |department| %>
+  <div class="card" >
+    <div class="card-header"><%= department.name %></div>
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-body-secondary">
+        <mark>
+          <%= "#{department.workers.count} #{'trabajador'.pluralize(department.workers.count)}" %>
+        </mark>
+      </h6>
+      <%= link_to "Modificar", edit_department_path(department), class: "btn btn-secondary" %>
+      <%= link_to "Eliminar departamento", department_path(department),data: { turbo_method: :delete}, class: "btn btn-danger" %>
+    </div>
+  </div>
+<% end %>
+
+<%= link_to "Crear departamento", new_department_path, class: "btn btn-success my-5" %>
