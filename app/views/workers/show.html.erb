@@ -5,18 +5,17 @@
 <div class="card-header"><%= @worker.name %> <%= @worker.last_name %></div>
   <div class="card-body">
     <h6 class="card-subtitle mb-2 text-body-secondary"><mark><%= @department%></mark></h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content</p>
     <%= link_to "Modificar", edit_worker_path, class: "btn btn-secondary" %>
+    <%= link_to "Ver fichajes", worker_time_entries_path(@worker), class: "btn btn-primary" %>
+
     <%= link_to "Eliminar trabajador", worker_path(@worker),data: { turbo_method: :delete}, class: "btn btn-danger" %>
+
   </div>
 </div>
 
+
 <%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker), class:"btn btn-success" %>
-
-<% @time_entries.each do |te| %>
-  <%=  te.entry_date %>
-<% end %>
-
 <%= link_to "Volver", workers_path, class: "btn btn-secondary" %>
 
 

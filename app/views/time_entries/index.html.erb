@@ -1,2 +1,5 @@
-Fichajes de <%= @worker.name %> 
+<h1>Fichajes de <%= @worker.name %></h1>
 
+<%= render 'time_entries' %>
+
+<%= link_to "Volver", worker_path(@worker), class: "btn btn-secondary" %>

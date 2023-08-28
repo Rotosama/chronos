@@ -1,0 +1,33 @@
+<h1>Fichajes de <%= @worker.name %></h1>
+
+<% first_entry_time = @time_entries.first&.entry_date %>
+<% current_time = Time.now %>
+
+<% if first_entry_time.present? %>
+  <p>Horas trabajadas desde la primera entrada: <%= distance_of_time_in_words(first_entry_time, current_time) %></p>
+<% else %>
+  <p>Aún no hay registros de tiempo</p>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Día</th>
+      <th>Hora entrada</th>
+      <th>Hora salida</th>
+      <th>Pausas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @time_entries.each do |te| %>
+      <tr>
+        <td><%= te.entry_date.strftime("%Y-%m-%d") %></td>
+        <td><%= te.entry_date.strftime("%H:%M:%S") %></td>
+        <td><%= te.exit_date.present? ? te.exit_date.strftime("%H:%M:%S") : "-" %></td>
+        <td>
+          <%= link_to "Ver", worker_time_entry_path(@worker, te) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
