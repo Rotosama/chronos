@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_131016) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_134853) do
   create_table "breaks", force: :cascade do |t|
     t.integer "time_entry_id"
-    t.time "start_time"
-    t.time "end_time"
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["time_entry_id"], name: "index_breaks_on_time_entry_id"
   end
 

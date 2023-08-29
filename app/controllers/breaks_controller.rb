@@ -1,11 +1,13 @@
 class BreaksController < ApplicationController
+  before_action :set_worker, :set_time_entry
+  
   def index
-    @breaks = Break.all
+    @breaks = Break.where(time_entry_id: @time_entry.id)
   end
-
+  
   def show
-    @break = Break.find(params[:id])
-  end
+    @break = Break.where(time_entry_id: @time_entry.id)
+    end
 
   def new
     @break = Break.new
@@ -13,15 +15,16 @@ class BreaksController < ApplicationController
 
   def create
     @break = Break.new(break_params)
+    @break.time_entry_id = @time_entry.id
     if @break.save
-      redirect_to @break
+      redirect_to worker_time_entries_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @break = Break.find(params[:id])
+    @break = Break.where(time_entry_id: @time_entry.id)
   end
 
   def update
@@ -43,6 +46,14 @@ class BreaksController < ApplicationController
 
   def break_params
     params.require(:break)
-          .permit(:start_time, :end_time, :comment)
+          .permit(:time_entry_id, :start_time, :end_time, :comment)
+  end
+
+  def set_worker
+    @worker = Worker.find(params[:worker_id])
+  end
+
+  def set_time_entry
+    @time_entry = TimeEntry.find(params[:time_entry_id])
   end
 end

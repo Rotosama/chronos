@@ -17,19 +17,29 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.new(time_entries_params)
     @time_entry.worker_id = @worker.id
     if @time_entry.save
-      redirect_to worker_path(@worker)
+      redirect_to worker_time_entries_path(@worker)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
+    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
   end
 
   def update
+    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
+
+    if @time_entry.update(time_entries_params)
+      redirect_to worker_time_entry_path(@worker, @time_entry)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
+    @time_entry.destroy
   end
 
   private
