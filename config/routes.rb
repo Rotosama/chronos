@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :workers do
 
     resources :time_entries do
+      member do
+        patch 'close_day', to: 'time_entries#close_day'
+      end
 
       resources :breaks
       

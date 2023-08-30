@@ -6,7 +6,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def show
-    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
+    @time_entry = @worker.time_entries.find(params[:id]) 
   end
 
   def new
@@ -16,21 +16,34 @@ class TimeEntriesController < ApplicationController
   def create
     @time_entry = TimeEntry.new(time_entries_params)
     @time_entry.worker_id = @worker.id
+    @time_entry.entry_date = DateTime.now
     if @time_entry.save
       flash[:notice] = "Ha iniciado la jornada."
-      redirect_to worker_time_entries_path(@worker)
+      redirect_to worker_time_entry_path(@worker, @time_entry)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def close_day
+    @time_entry = @worker.time_entries.find(params[:id])
+    @time_entry.worker_id = @worker.id
+    @time_entry.exit_date = DateTime.now
+    if @time_entry.save
+      flash[:notice] = "Ha acabado la jornada."
+      redirect_to worker_time_entries_path(@worker)
+    else
+      flash[:alert] = "No se pudo cerrar la jornada."
+    end
+    redirect_to worker_time_entries_path(@worker)
+  end
+
   def edit
-    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
+    @time_entry = @worker.time_entries.find(params[:id]) 
   end
 
   def update
-    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
-
+    @time_entry = @worker.time_entries.find(params[:id]) 
     if @time_entry.update(time_entries_params)
       flash[:notice] = "Sus cambios han sido guardados."
       redirect_to worker_time_entry_path(@worker, @time_entry)

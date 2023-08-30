@@ -11,11 +11,15 @@ class BreaksController < ApplicationController
 
   def new
     @break = Break.new
+    @break.start_time = Time.zone.now.beginning_of_day
+    @break.end_time = Time.zone.now.beginning_of_day
   end
 
   def create
     @break = Break.new(break_params)
     @break.time_entry_id = @time_entry.id
+    @break.start_time = @break.start_time.change(day: @time_entry.entry_date.day)
+    @break.end_time = @break.end_time.change(day: @time_entry.entry_date.day)
     if @break.save
       redirect_to worker_time_entries_path
     else
@@ -24,13 +28,13 @@ class BreaksController < ApplicationController
   end
 
   def edit
-    @break = Break.where(time_entry_id: @time_entry.id)
+    @break = @time_entry.breaks.find(params[:id])
   end
 
   def update
-    @break = Break.find(params[:id])
+    @break = @time_entry.breaks.find(params[:id])
     if @break.update(break_params)
-      redirect_to break_path(@break)
+      redirect_to worker_time_entries_path()
     else
       render :edit, status: :unprocessable_entity
     end

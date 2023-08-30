@@ -1,2 +1,5 @@
-<h1>TimeEntries#show</h1>
-<p>Find me in app/views/time_entries/show.html.erb</p>
+<% if @time_entry.entry_date.blank? %>
+  <%= link_to "Iniciar Jornada", worker_time_entry_path(@worker, @time_entry), method: :post, class: "btn btn-primary" %>
+<% elsif @time_entry.exit_date.blank? %>
+  <%= link_to "Cerrar Jornada", close_day_worker_time_entry_path(@worker, @time_entry), method: :patch, class: "btn btn-danger" %>
+<% end %>
