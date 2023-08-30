@@ -1,0 +1,26 @@
+<h5 class="text-center"><%= @worker.name %> día: <%= @time_entry.entry_date.strftime("%d-%m-%Y") %></h5>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Inicio descanso</th>
+      <th>Fin descanso</th>
+      <th>Motivo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @breaks.each do |b| %>
+      <tr>
+        <td><%= b.start_time.present? ? b.start_time.strftime("%H:%M:%S") : "-" %></td>
+        <td><%= b.end_time.present? ? b.end_time.strftime("%H:%M:%S") : "-"  %></td>
+        <td><%= b.comment %></td>
+        <td>
+          <%= link_to "ver", worker_time_entry_break_path(@worker, @time_entry, b) %>
+          <%= link_to "Editar", edit_worker_time_entry_break_path(@worker, @time_entry, b) %>
+          <%= link_to "Borrar", worker_time_entry_break_path(@worker, @time_entry, b), data: { turbo_method: :delete } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

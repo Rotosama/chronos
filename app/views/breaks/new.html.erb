@@ -1,21 +1,4 @@
-<%= form_with model: @break, url: worker_time_entry_breaks_path(@worker, @time_entry) do |f| %>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-floating mb-3">
-          <%= f.datetime_field :start_time, class: "form-control", placeholder: "start_time" %>
-          <%= f.label :entrada %>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-floating mb-3">
-          <%= f.datetime_field :end_time, class: "form-control", placeholder: "end_time" %>
-          <%= f.label :salida %>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.submit "Pausar Jornada", class: "btn btn-primary" %>
-    </div>
-  </div>
-<% end %>
+<h1 class="my-5">Crear pausa</h1>
+
+<%= render'form' %>
+

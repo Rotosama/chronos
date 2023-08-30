@@ -17,6 +17,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.new(time_entries_params)
     @time_entry.worker_id = @worker.id
     if @time_entry.save
+      flash[:notice] = "Ha iniciado la jornada."
       redirect_to worker_time_entries_path(@worker)
     else
       render :new, status: :unprocessable_entity
@@ -31,6 +32,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
 
     if @time_entry.update(time_entries_params)
+      flash[:notice] = "Sus cambios han sido guardados."
       redirect_to worker_time_entry_path(@worker, @time_entry)
     else
       render :edit, status: :unprocessable_entity
@@ -38,9 +40,12 @@ class TimeEntriesController < ApplicationController
   end
 
   def destroy
-    @time_entry = TimeEntry.where(worker_id: @worker.id, id: @time_entry.id)
+    @time_entry = @worker.time_entries.find(params[:id]) 
     @time_entry.destroy
+    flash[:notice] = "Se eliminó la entrada de tiempo correctamente."
+    redirect_to worker_time_entries_path(@worker)
   end
+  
 
   private
 

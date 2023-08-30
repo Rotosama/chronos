@@ -1,5 +1,5 @@
 class Worker < ApplicationRecord
-  has_many :time_entries
+  has_many :time_entries, dependent: :destroy
   has_one :department
   
   validates :name, presence: true, length: { maximum: 50 }

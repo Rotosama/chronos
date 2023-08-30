@@ -39,7 +39,7 @@ class BreaksController < ApplicationController
   def destroy
     @break = Break.find(params[:id])
     @break.destroy
-    redirect_to break_path
+    redirect_to worker_time_entry_breaks_path
   end
 
   private

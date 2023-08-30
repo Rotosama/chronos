@@ -1,4 +1,5 @@
 class WorkersController < ApplicationController
+  before_action :set_worker, only: [:show, :edit, :update, :destroy]
 
   def index
     @workers = Worker.all
@@ -6,10 +7,8 @@ class WorkersController < ApplicationController
   end
 
   def show
-    @worker  = Worker.find(params[:id])
     @time_entries = @worker.time_entries
     @department = Department.find(@worker.department_id).name
-
   end
 
   def new
@@ -22,6 +21,7 @@ class WorkersController < ApplicationController
     @departments = Department.all
     @worker = Worker.new(worker_params)
     if @worker.save
+      flash[:notice] = "El perfil se ha creado correctamente."
       redirect_to @worker
     else
       render :new, status: :unprocessable_entity
@@ -29,14 +29,12 @@ class WorkersController < ApplicationController
   end
 
   def edit
-    @worker  = Worker.find(params[:id])
     @departments = Department.all
-
   end
 
   def update
-    @worker = Worker.find(params[:id])
     if @worker.update(worker_params)
+      flash[:notice] = "Tu perfil se ha modificado correctamente."
       redirect_to worker_path(@worker)
     else
       render :edit, status: :unprocessable_entity
@@ -44,9 +42,9 @@ class WorkersController < ApplicationController
   end
 
   def destroy
-    @worker = Worker.find(params[:id])
+    
     @worker.destroy
-
+    flash[:notice] = "El trabajador se ha eliminado correctamente."
     redirect_to workers_path
   end
 
@@ -55,5 +53,9 @@ class WorkersController < ApplicationController
   def worker_params
     params.require(:worker).
     permit(:name, :last_name, :dni, :department_id, :birthdate, :role, :start_date, :finish_date)
+  end
+
+  def set_worker
+    @worker = Worker.find(params[:id])
   end
 end

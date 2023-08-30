@@ -10,6 +10,7 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new(department_params)
     if @department.save
+      flash[:notice] = "El departamento ha sido creado correctamente."
       redirect_to departments_path
     else
       render :new, status: :unprocessable_entity
@@ -23,7 +24,8 @@ class DepartmentsController < ApplicationController
   def update
     @department = Department.find(params[:id])
     if @department.update(department_params)
-      redirect_to department_path(@department)
+      flash[:notice] = "El departamento se ha modificado correctamente."
+      redirect_to departments_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,6 +34,7 @@ class DepartmentsController < ApplicationController
   def destroy
     @department = Department.find(params[:id])
     @department.destroy
+    flash[:notice] = "El departamento se ha eliminado correctamente."
     redirect_to departments_path
   end
 

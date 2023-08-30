@@ -5,6 +5,8 @@
       <th>Hora entrada</th>
       <th>Hora salida</th>
       <th>Pausas</th>
+      <th>Acciones</th>
+
     </tr>
   </thead>
   <tbody>
@@ -16,6 +18,8 @@
         <td>
           <%= link_to "Ver", worker_time_entry_breaks_path(@worker, te) %>
         </td>
+        <td><%= link_to "Borrar", worker_time_entry_path(@worker, te), data: { turbo_method: :delete } %></td>
+
       </tr>
     <% end %>
   </tbody>
