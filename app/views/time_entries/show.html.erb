@@ -1,5 +1,14 @@
-<% if @time_entry.entry_date.blank? %>
-  <%= link_to "Iniciar Jornada", worker_time_entry_path(@worker, @time_entry), method: :post, class: "btn btn-primary" %>
-<% elsif @time_entry.exit_date.blank? %>
-  <%= link_to "Cerrar Jornada", close_day_worker_time_entry_path(@worker, @time_entry), method: :patch, class: "btn btn-danger" %>
-<% end %>
+<div class="d-flex justify-content-center align-items-center">
+  <% if @time_entry.entry_date.blank? %>
+    <%= link_to "Iniciar Jornada", worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :post }, class: "btn btn-primary" %>
+  <% elsif @time_entry.exit_date.blank? %>
+    <%= link_to "Pausar Jornada", new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-warning" %>
+     
+      <% if @time_entry.breaks.present? && @time_entry.breaks.last.start_time.present? && @time_entry.breaks.last.end_time.blank? %>
+        <%= link_to "Reanudar Jornada", stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last), data: { turbo_method: :patch }, class:"btn btn-warning" %>
+      <% end %>
+      
+    <%= link_to "Cerrar Jornada", close_day_worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :patch }, class: "btn btn-danger" %>
+  <% end %>
+</div>
+

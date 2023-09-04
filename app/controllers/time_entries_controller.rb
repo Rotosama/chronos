@@ -6,7 +6,8 @@ class TimeEntriesController < ApplicationController
   end
 
   def show
-    @time_entry = @worker.time_entries.find(params[:id]) 
+    @time_entry = @worker.time_entries.find(params[:id])
+    
   end
 
   def new
@@ -35,7 +36,6 @@ class TimeEntriesController < ApplicationController
     else
       flash[:alert] = "No se pudo cerrar la jornada."
     end
-    redirect_to worker_time_entries_path(@worker)
   end
 
   def edit

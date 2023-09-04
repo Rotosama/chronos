@@ -11,19 +11,29 @@ class BreaksController < ApplicationController
 
   def new
     @break = Break.new
-    @break.start_time = Time.zone.now.beginning_of_day
-    @break.end_time = Time.zone.now.beginning_of_day
+  
   end
 
   def create
     @break = Break.new(break_params)
     @break.time_entry_id = @time_entry.id
-    @break.start_time = @break.start_time.change(day: @time_entry.entry_date.day)
-    @break.end_time = @break.end_time.change(day: @time_entry.entry_date.day)
+    @break.start_time = Time.zone.now.change(day: @time_entry.entry_date.day)
     if @break.save
-      redirect_to worker_time_entries_path
+      flash[:notice] = "Se creó una nueva pausa."
+      redirect_to worker_time_entry_path(@worker, @time_entry)
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def stop_pause
+    @break = @time_entry.breaks.find(params[:id])
+    @break.end_time = Time.zone.now.change(day: @time_entry.entry_date.day)
+    if @break.save
+      flash[:notice] = "Ha reanudado la jornada."
+      redirect_to worker_time_entry_path(@worker)
+    else
+      flash[:alert] = "No se pudo cerrar la jornada."
     end
   end
 
