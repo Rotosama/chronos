@@ -18,7 +18,10 @@
         <td>
           <%= link_to "Ver", worker_time_entry_breaks_path(@worker, te) %>
         </td>
-        <td><%= link_to "Borrar", worker_time_entry_path(@worker, te), data: { turbo_method: :delete } %></td>
+        <td>
+        <%= link_to "Borrar", worker_time_entry_path(@worker, te), data: { turbo_method: :delete } %>
+        <%= link_to "Editar", edit_worker_time_entry_path(@worker, te) %>
+        </td>
 
       </tr>
     <% end %>

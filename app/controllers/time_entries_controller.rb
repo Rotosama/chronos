@@ -46,7 +46,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = @worker.time_entries.find(params[:id]) 
     if @time_entry.update(time_entries_params)
       flash[:notice] = "Sus cambios han sido guardados."
-      redirect_to worker_time_entry_path(@worker, @time_entry)
+      redirect_to worker_time_entries_path(@worker)
     else
       render :edit, status: :unprocessable_entity
     end
