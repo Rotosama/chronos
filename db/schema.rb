@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_08_111938) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_08_105854) do
   create_table "breaks", force: :cascade do |t|
     t.integer "time_entry_id"
     t.string "comment"
