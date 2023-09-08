@@ -20,7 +20,6 @@ class WorkersController < ApplicationController
   def create
     @departments = Department.all
     @worker = Worker.new(worker_params)
-    @worker.admin = false
 
     if @worker.save
       flash[:notice] = "El perfil se ha creado correctamente."
