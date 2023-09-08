@@ -10,6 +10,6 @@ class Worker < ApplicationRecord
   validates :dni, presence: true, uniqueness: true, length: { is: 9 }
   validates :department_id, presence: true
   validates :birthdate, presence: true
-  validates :admin, presence: true
+  validates :admin, inclusion: [true, false]
 
 end

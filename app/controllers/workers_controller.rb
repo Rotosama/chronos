@@ -21,6 +21,7 @@ class WorkersController < ApplicationController
     @departments = Department.all
     @worker = Worker.new(worker_params)
     @worker.admin = false
+
     if @worker.save
       flash[:notice] = "El perfil se ha creado correctamente."
       redirect_to @worker
