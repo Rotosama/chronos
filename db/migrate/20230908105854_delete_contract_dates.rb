@@ -3,6 +3,5 @@ class DeleteContractDates < ActiveRecord::Migration[7.0]
     remove_column :workers, :start_date, :date
     remove_column :workers, :finish_date, :date
     remove_column :workers, :role, :integere
-    add_column :workers, :admin, :boolean
   end
 end
