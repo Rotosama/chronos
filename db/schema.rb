@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_134853) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_08_111938) do
   create_table "breaks", force: :cascade do |t|
     t.integer "time_entry_id"
     t.string "comment"
@@ -42,12 +42,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_134853) do
     t.string "dni"
     t.integer "department_id"
     t.date "birthdate"
-    t.date "start_date"
-    t.date "finish_date"
-    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.boolean "admin", default: false
     t.index ["department_id"], name: "index_workers_on_department_id"
+    t.index ["email"], name: "index_workers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_workers_on_reset_password_token", unique: true
   end
 
   add_foreign_key "breaks", "time_entries"

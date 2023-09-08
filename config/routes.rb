@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :workers
   resources :departments
   resources :workers do
     resources :time_entries do

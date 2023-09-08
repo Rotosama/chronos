@@ -20,6 +20,7 @@ class WorkersController < ApplicationController
   def create
     @departments = Department.all
     @worker = Worker.new(worker_params)
+    @worker.admin = false
     if @worker.save
       flash[:notice] = "El perfil se ha creado correctamente."
       redirect_to @worker
@@ -52,7 +53,7 @@ class WorkersController < ApplicationController
 
   def worker_params
     params.require(:worker).
-    permit(:name, :last_name, :dni, :department_id, :birthdate, :role, :start_date, :finish_date)
+    permit(:email, :password, :name, :last_name, :dni, :department_id, :birthdate, :admin)
   end
 
   def set_worker
