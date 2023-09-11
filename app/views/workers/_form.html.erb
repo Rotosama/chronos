@@ -14,13 +14,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <%= f.text_field :email, class: "form-control", placeholder: "name" %>
+          <%= f.text_field :email, class: "form-control", placeholder: "email" %>
           <%= f.label :email %>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <%= f.password_field :password, class: "form-control", placeholder: "last_name" %>
+          <%= f.password_field :password, class: "form-control", placeholder: "password" %>
           <%= f.label :contraseña %>
         </div>
       </div>
@@ -49,7 +49,7 @@
       </div>
       <div class="col-md-4">
       <div class="form-floating mb-3">
-        <%= f.collection_select :department_id, @departments, :id, :name, { prompt: "Selecciona un departamento" }, class: "form-select", id: "floatingSelectGrid" %>
+        <%= f.collection_select :department_id, Department.all, :id, :name, { prompt: "Selecciona un departamento" }, class: "form-select", id: "floatingSelectGrid" %>
         <%= f.label :Departamento, "for" => "floatingSelectGrid" %>
       </div>
     

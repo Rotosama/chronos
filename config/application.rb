@@ -16,6 +16,7 @@ module Testapp
     # in config/environments, which are processed later.
     #
     config.time_zone = "Europe/Madrid"
+    config.i18n.default_locale = :es
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
