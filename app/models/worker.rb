@@ -12,4 +12,7 @@ class Worker < ApplicationRecord
   validates :birthdate, presence: true
   validates :admin, inclusion: [true, false]
 
+  scope :admin, -> { where(admin: true) }
+  scope :employees, -> { where(admin: false) }
+
 end

@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-dark"> <!-- Reemplaza "bg-custom-color" con la clase de color personalizada que desees -->
   <div class="container">
-    <%= link_to "Inicio", root_path %>
+    <%= link_to "Inicio", root_path, class: "navbar-brand text-white" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to "Departamentos", departments_path %>
+          <%= link_to "Departamentos", departments_path, class: "nav-link text-white" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Empleados", workers_path %>
+          <%= link_to "Empleados", workers_path, class: "nav-link text-white" %>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Vacaciones
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="#">Ver vacaciones</a></li>
             <li><a class="dropdown-item" href="#">Aprobar vacaciones action</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -24,10 +24,12 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <% if worker_signed_in? %>
+        <%= link_to current_worker.name, edit_worker_path(current_worker), class: "text-white" %>
+        <%= link_to "Cerrar Sesión", destroy_worker_session_path, data: { turbo_method: :delete }, class: "btn btn-danger ms-1" %>
+      <% else %>
+        Invitado
+      <% end %>
     </div>
   </div>
 </nav>
