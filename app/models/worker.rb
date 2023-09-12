@@ -3,6 +3,7 @@ class Worker < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable, :registerable,
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
   has_many :time_entries, dependent: :destroy
+  has_many :vacations, dependent: :destroy
   has_one :department
   
   validates :name, presence: true, length: { maximum: 50 }

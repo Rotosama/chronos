@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_08_105854) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_102714) do
   create_table "breaks", force: :cascade do |t|
     t.integer "time_entry_id"
     t.string "comment"
@@ -36,6 +36,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_105854) do
     t.index ["worker_id"], name: "index_time_entries_on_worker_id"
   end
 
+  create_table "vacations", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "status"
+    t.integer "worker_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.index ["worker_id"], name: "index_vacations_on_worker_id"
+  end
+
   create_table "workers", force: :cascade do |t|
     t.string "name"
     t.string "last_name"
@@ -57,5 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_105854) do
 
   add_foreign_key "breaks", "time_entries"
   add_foreign_key "time_entries", "workers"
+  add_foreign_key "vacations", "workers"
   add_foreign_key "workers", "departments"
 end
