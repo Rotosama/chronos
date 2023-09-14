@@ -2,17 +2,23 @@
 <%= month_calendar(events: @vacations) do |date, vacations| %>
   <%= date.day %>
   <% vacations.each do |vacation| %>
-    <div class="card text-bg-info mb-1">
-      <div class="card-body ">
-        <%= vacation.description %>
-        <span class="badge rounded-pill text-bg-danger">
-        
-        <%= link_to "Eliminar", worker_vacation_path(@worker, vacation), 
+    <div class="card border-warning text-bg-light mb-3">
+      <div class="card-header text-center">
+        <i><%= vacation.worker.name %></i>
+      </div>
+      <div class="card-body text-center">
+        <strong><%= vacation.description %></strong>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        <%= link_to "x", worker_vacation_path(@worker, vacation), 
         data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %></span>
+      </div>
+      <div class="card_footer text-center">
+         <small><i>Creado <%= vacation.created_at.strftime("%d-%m-%Y") %></i></small>
       </div>
     </div>
   <% end %>
 <% end %>
+
 <div class="d-flex justify-content-center">
     <%= link_to "Solicitar vacaciones", new_worker_vacation_path(@worker), class: "btn btn-primary me-2"%>
     <%= link_to "Volver", worker_path(@worker), class: "btn btn-secondary ms-2"%>

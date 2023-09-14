@@ -24,7 +24,8 @@ class VacationsController < ApplicationController
       flash[:notice] = "Sus vacaciones se han registrado correctamente"
       redirect_to worker_vacations_path(@worker)
     else
-      flash[:alert] = "No se pudo registrar sus vacaciones."
+      flash.now[:alert] = "No se pudo registrar sus vacaciones."
+      render :new, status: :unprocessable_entity
     end
     
   end

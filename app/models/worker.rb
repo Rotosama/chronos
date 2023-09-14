@@ -1,4 +1,6 @@
 class Worker < ApplicationRecord
+  before_save :downcase_full_name
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable, :registerable,
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
@@ -15,5 +17,10 @@ class Worker < ApplicationRecord
 
   scope :admin, -> { where(admin: true) }
   scope :employees, -> { where(admin: false) }
+
+  def downcase_full_name
+    self.name = name.downcase
+    self.last_name = last_name.downcase
+  end
 
 end

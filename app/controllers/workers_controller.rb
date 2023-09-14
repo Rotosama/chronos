@@ -20,7 +20,6 @@ class WorkersController < ApplicationController
   def create
     @departments = Department.all
     @worker = Worker.new(worker_params)
-
     if @worker.save
       flash[:notice] = "El perfil se ha creado correctamente."
       redirect_to @worker
@@ -35,6 +34,7 @@ class WorkersController < ApplicationController
 
   def update
     if @worker.update(worker_params)
+      bypass_sign_in @worker
       flash[:notice] = "Tu perfil se ha modificado correctamente."
       redirect_to worker_path(@worker)
     else

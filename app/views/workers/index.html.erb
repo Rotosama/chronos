@@ -23,11 +23,13 @@
           <tbody>
             <% department.workers.each do |worker| %>
               <tr>
-                <td><%= worker.name %></td>
-                <td><%= worker.last_name %></td>
+                <td><%= worker.name.capitalize %></td>
+                <td><%= worker.last_name.capitalize %></td>
                 <td><%= worker.dni %></td>
                 <td>
-                  <%= link_to "ver", worker_path(worker) %>
+                  <%= link_to worker_path(worker) do %>
+                    <i class="bi bi-eye-fill"></i>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

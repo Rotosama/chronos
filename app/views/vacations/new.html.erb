@@ -1,14 +1,6 @@
 <%= form_with model: [@worker, @vacation] do |f| %>
   <div class="container">
-    <ul>
-      <% @vacation.errors.full_messages.each do |message| %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <li><%= message %></li>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      <% end %>
+    <%= render 'shared/errors', obj: @vacation %>
     </ul>
     <div class="row">
       <div class="col-md-6">
@@ -24,13 +16,13 @@
         </div>
       </div>
       <div class="col-md-12"> 
-      <div class="form-floating mb-3 text-center">
+      <div class="form-floating mb-3">
         <%= f.text_area :description, class: "form-control", style: "height: 200px;" %>
         <%= f.label :Motivo %>
       </div>
     </div>
-    <div>
-      <%= f.submit %>
+    <div class="justify-content-center">
+      <%= f.submit "Solicitar", class:"btn btn-success" %>
     </div>
     </div>
   </div>

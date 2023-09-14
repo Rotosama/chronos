@@ -13,8 +13,10 @@
           <%= link_to "Empleados", workers_path, class: "nav-link text-white" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Vacaciones", worker_vacations_path(current_worker), class: "nav-link text-white" %>
-        </li>
+          <% if current_worker %>
+            <%= link_to "Vacaciones", worker_vacations_path(current_worker), class: "nav-link text-white" %>
+          <% end %>
+          </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Vacaciones
@@ -28,8 +30,12 @@
         </li>
       </ul>
       <% if worker_signed_in? %>
-        <%= link_to current_worker.name, edit_worker_path(current_worker), class: "text-white" %>
-        <%= link_to "Cerrar Sesión", destroy_worker_session_path, data: { turbo_method: :delete }, class: "btn btn-danger ms-1" %>
+        <%= link_to edit_worker_path(current_worker), class: "text-white" do %>
+          <i class="bi bi-person-circle mx-2"></i><%= current_worker.name.capitalize %>
+          <% end %>
+        <%= link_to destroy_worker_session_path, data: { turbo_method: :delete }, class: "btn btn-danger ms-1" do %>
+            <i class="bi bi-door-closed-fill"></i>Cerrar Sesión
+          <% end %>
       <% else %>
         Invitado
       <% end %>

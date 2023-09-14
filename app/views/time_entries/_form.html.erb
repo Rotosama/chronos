@@ -1,5 +1,6 @@
 <%= form_with model: [@worker, @time_entry] do |f| %>
   <div class="container">
+    <%= render 'shared/errors', obj: @time_entry %>
     <div class="row">
       <div class="col-md-6">
         <div class="form-floating mb-3">
