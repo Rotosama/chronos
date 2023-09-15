@@ -5,11 +5,18 @@ class VacationsController < ApplicationController
     @vacations = Vacation.all
   end
   
-
   def edit
+    @vacation = Vacation.find(params[:id])
   end
 
   def update
+    @vacation = Vacation.find(params[:id])
+    if @vacation.update(vacation_params)
+      flash[:notice] = "Sus cambios han sido guardados."
+      redirect_to worker_vacations_path(@worker)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def new

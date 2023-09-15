@@ -1,0 +1,28 @@
+<%= form_with model: [@worker, @vacation] do |f| %>
+  <div class="container">
+    <%= render 'shared/errors', obj: @vacation %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <%= f.date_field :start_time, class: "form-select", placeholder: "start_time" %>
+          <%= f.label :inicio_vacaciones %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <%= f.date_field :end_time, class: "form-select", placeholder: "end_time" %>
+          <%= f.label :fin_de_vacaciones %>
+        </div>
+      </div>
+      <div class="col-md-12"> 
+       <div class="form-floating mb-3">
+          <%= f.text_area :description, class: "form-control", style: "height: 200px;" %>
+          <%= f.label :Motivo %>
+       </div>
+     </div>
+      <div class="justify-content-center">
+        <%= f.submit (@vacation.new_record? ? "Solicitar" : "Modificar" ), class:"btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

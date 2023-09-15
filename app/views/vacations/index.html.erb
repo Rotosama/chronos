@@ -1,17 +1,27 @@
-
 <%= month_calendar(events: @vacations) do |date, vacations| %>
   <%= date.day %>
   <% vacations.each do |vacation| %>
-    <div class="card border-warning text-bg-light mb-3">
+    <div class="card <%= vacation.worker == @worker ? 'border-info' : 'border-warning' %> text-bg-light mb-3">
       <div class="card-header text-center">
-        <i><%= vacation.worker.name %></i>
+        <i><%= vacation.worker.name.capitalize %></i>
+        <% if vacation.status == "Aprobado" %>
+          <i class="bi bi-check-circle-fill text-success"></i>
+        <% end %>
       </div>
       <div class="card-body text-center">
         <strong><%= vacation.description %></strong>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        <%= link_to "x", worker_vacation_path(@worker, vacation), 
-        data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %></span>
+        <%= link_to edit_worker_vacation_path(@worker, vacation) do %>
+          <i class="bi bi-pencil"></i>
+        <% end %>
+
+        <span class="position-absolute top-0 start-100 translate-middle badge">
+          <%= link_to worker_vacation_path(@worker, vacation), 
+          data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }  do %>
+            <i class="bi bi-x-circle-fill text-danger"></i>
+          <% end %>
+        </span>
       </div>
+
       <div class="card_footer text-center">
          <small><i>Creado <%= vacation.created_at.strftime("%d-%m-%Y") %></i></small>
       </div>

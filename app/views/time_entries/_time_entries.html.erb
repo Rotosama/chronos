@@ -1,6 +1,6 @@
 <table class="table">
   <thead>
-    <tr>
+    <tr class= 'text-center'>
       <th>Día</th>
       <th>Hora entrada</th>
       <th>Hora salida</th>
@@ -11,18 +11,23 @@
   </thead>
   <tbody>
     <% @time_entries.each do |te| %>
-      <tr>
+      <tr class= 'text-center'>
         <td><%= te.entry_date.strftime("%Y-%m-%d") %></td>
         <td><%= te.entry_date.strftime("%H:%M:%S") %></td>
         <td><%= te.exit_date.present? ? te.exit_date.strftime("%H:%M:%S") : "-" %></td>
         <td>
-          <%= link_to "Ver", worker_time_entry_breaks_path(@worker, te) %>
+          <%= link_to worker_time_entry_breaks_path(@worker, te) do %>
+            <i class="bi bi-pause-circle-fill text-warning"></i>
+          <% end %>
         </td>
         <td>
-        <%= link_to "Borrar", worker_time_entry_path(@worker, te), data: { turbo_method: :delete } %>
-        <%= link_to "Editar", edit_worker_time_entry_path(@worker, te) %>
+          <%= link_to edit_worker_time_entry_path(@worker, te) do %>
+            <i class="bi bi-pencil-square text-primary"></i>
+          <% end %>
+          <%= link_to worker_time_entry_path(@worker, te), data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" } do %>
+            <i class="bi bi-trash-fill text-danger"></i>
+          <% end %>
         </td>
-
       </tr>
     <% end %>
   </tbody>
