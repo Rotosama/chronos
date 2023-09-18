@@ -1,5 +1,6 @@
 class WorkersController < ApplicationController
   before_action :set_worker, only: [:show, :edit, :update, :destroy]
+  before_action :require_same_worker, only: [:edit, :update, :destroy, :show]
 
   def index
     @workers = Worker.all
@@ -34,7 +35,9 @@ class WorkersController < ApplicationController
 
   def update
     if @worker.update(worker_params)
-      bypass_sign_in @worker
+      unless current_worker.admin?
+        bypass_sign_in @worker
+      end
       flash[:notice] = "Tu perfil se ha modificado correctamente."
       redirect_to worker_path(@worker)
     else
@@ -58,5 +61,12 @@ class WorkersController < ApplicationController
 
   def set_worker
     @worker = Worker.find(params[:id])
+  end
+
+  def require_same_worker
+    unless current_worker && (current_worker == @worker || current_worker.admin?)
+      flash[:alert] = "Sólo puedes editar tus propios recursos"
+      redirect_to worker_path(current_worker)
+    end
   end
 end

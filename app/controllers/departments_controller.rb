@@ -1,4 +1,5 @@
 class DepartmentsController < ApplicationController
+  before_action :admin_required
   def index
     @departments = Department.all
   end
@@ -43,4 +44,11 @@ class DepartmentsController < ApplicationController
   def department_params
     params.require(:department).permit(:name)
   end
+
+  def admin_required
+      unless current_worker.admin?
+        flash[:alert] = "Sólo puedes editar tus propios recursos"
+        redirect_to worker_path(current_worker)
+      end
+    end   
 end

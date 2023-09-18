@@ -6,10 +6,10 @@
 
       <dl class="row ">
         <dt class="col-sm-3">Nombre:</dt>
-        <dd class="col-sm-9"><%= @worker.name %></dd>
+        <dd class="col-sm-9"><%= @worker.name.capitalize %></dd>
 
         <dt class="col-sm-3">Apellido:</dt>
-        <dd class="col-sm-9"><%= @worker.last_name %></dd>
+        <dd class="col-sm-9"><%= @worker.last_name.capitalize %></dd>
 
         <dt class="col-sm-3">DNI:</dt>
         <dd class="col-sm-9"><%= @worker.dni %></dd>
@@ -18,7 +18,7 @@
         <dd class="col-sm-9"><%= @worker.birthdate %></dd>
 
         <dt class="col-sm-3">Departamento:</dt>
-        <dd class="col-sm-9"><%= @department %></dd>
+        <dd class="col-sm-9"><%= @department.capitalize %></dd>
       </dl>
     </div>
     <div class="row justify-content-center">
@@ -34,13 +34,19 @@
       </div>
       <div class="offcanvas-body">
         <div>
-          Bienvenido al panel del trabajador. AquÍ puedes editar el trabajador. También puedes empezar la jornada y consultar los fichajes.
+          Bienvenido al panel del trabajador. Aquí puedes editar el trabajador. También puedes empezar la jornada y consultar los fichajes.
         </div>
         <div class="dropdown mt-3">
           <div class="list-group">
-            <%= link_to "Iniciar jornada", new_worker_time_entry_path(@worker), class:"btn btn-success btn-block mb-2" %>
+          <% if worker_signed_in? == current_worker %>
+            <%= link_to new_worker_time_entry_path(@worker), class:"btn btn-success btn-block mb-2" do %>
+              <i class="bi bi-play-fill me-3"></i>Iniciar jornada
+            <% end %>
+          <% end %>
             <%= link_to "Ver fichajes", worker_time_entries_path(@worker), class: "btn btn-info btn-block mb-2" %>
-            <%= link_to "Editar", edit_worker_path(@worker), class: "btn btn-primary" %>
+            <%= link_to edit_worker_path(@worker), class: "btn btn-primary" do %>
+              <i class="bi bi-pen me-3"></i>Editar
+            <% end %>
           </div>
         </div>
     </div>

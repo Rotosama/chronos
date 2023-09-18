@@ -14,3 +14,31 @@
  *= require_self
  *= require simple_calendar
  */
+ .simple-calendar {
+  .day {}
+
+  .wday-0 {
+    color: brown;
+    background: rgb(187, 220, 241);
+  }
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {
+    color: brown;
+    background: rgb(187, 220, 241);
+  }
+  .today {}
+  .past {}
+  .future {}
+
+  .start-date {}
+
+  .prev-month {}
+  .next-month { }
+  .current-month {}
+
+  .has-events {}
+}

@@ -1,5 +1,6 @@
 class VacationsController < ApplicationController
   before_action :set_worker
+  before_action :require_same_worker, only: [:edit, :update, :new, :create, :destroy]
 
   def index
     @vacations = Vacation.all
@@ -52,5 +53,12 @@ class VacationsController < ApplicationController
 
   def set_worker
     @worker = Worker.find(params[:worker_id])
+  end
+
+  def require_same_worker
+    unless current_worker && (current_worker == @worker || current_worker.admin?)
+      flash[:alert] = "Sólo puedes editar tus propios recursos"
+      redirect_to worker_path(current_worker)
+    end
   end
 end

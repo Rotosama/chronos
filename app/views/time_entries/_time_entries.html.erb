@@ -10,6 +10,7 @@
     </tr>
   </thead>
   <tbody>
+  <% if @worker.admin? || @worker == current_worker %>
     <% @time_entries.each do |te| %>
       <tr class= 'text-center'>
         <td><%= te.entry_date.strftime("%Y-%m-%d") %></td>
@@ -21,14 +22,17 @@
           <% end %>
         </td>
         <td>
-          <%= link_to edit_worker_time_entry_path(@worker, te) do %>
+          <%= link_to edit_worker_time_entry_path(@worker, te), class: "text-decoration-none text-reset mx-2" do %>
             <i class="bi bi-pencil-square text-primary"></i>
           <% end %>
-          <%= link_to worker_time_entry_path(@worker, te), data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" } do %>
-            <i class="bi bi-trash-fill text-danger"></i>
+          <%= link_to worker_time_entry_path(@worker, te),
+            data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" },
+            class: "text-decoration-none text-reset mx-2" do %>
+             <i class="bi bi-trash-fill text-danger"></i>
           <% end %>
         </td>
       </tr>
     <% end %>
+  <% end %>
   </tbody>
 </table>

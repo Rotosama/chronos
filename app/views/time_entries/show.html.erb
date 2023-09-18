@@ -1,14 +1,26 @@
+<h1 class="text-center mb-5">Jornada día <%=Date.current.strftime("%d / %m / %Y")%></h1>
+
 <div class="d-flex justify-content-center align-items-center">
   <% if @time_entry.entry_date.blank? %>
     <%= link_to "Iniciar Jornada", worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :post }, class: "btn btn-primary" %>
   <% elsif @time_entry.exit_date.blank? %>
-    <%= link_to "Pausar Jornada", new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-warning" %>
+    <%= link_to new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-outline-warning mx-2" do %>
+      <i class="bi bi-pause-circle-fill display-2 mx-2"></i>
+    <% end %>
      
       <% if @time_entry.breaks.present? && @time_entry.breaks.last.start_time.present? && @time_entry.breaks.last.end_time.blank? %>
-        <%= link_to "Reanudar Jornada", stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last), data: { turbo_method: :patch }, class:"btn btn-warning" %>
+        <%= link_to stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last),
+         data: { turbo_method: :patch }, class:"btn btn-outline-warning" do %>
+          <i class="bi bi-play-circle display-2 mx-2"></i>
+        <% end %>
       <% end %>
       
-    <%= link_to "Cerrar Jornada", close_day_worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :patch }, class: "btn btn-danger" %>
+    <%= link_to close_day_worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :patch, turbo_confirm: "Vas a cerrar la jornada"}, class: "btn btn-outline-danger mx-2" do %>
+      <i class="bi bi-stop-circle-fill display-2 mx-2"></i>
+    <% end %>
   <% end %>
 </div>
 
+<div class="progress mt-5" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 60%"></div>
+</div>

@@ -1,5 +1,6 @@
 class TimeEntriesController < ApplicationController
   before_action :set_worker
+  before_action :require_same_worker
 
   def index
     @time_entries = TimeEntry.where(worker_id: @worker.id)
@@ -68,5 +69,12 @@ class TimeEntriesController < ApplicationController
 
   def set_worker
     @worker = Worker.find(params[:worker_id])
+  end
+
+  def require_same_worker
+    unless current_worker && (current_worker == @worker || current_worker.admin?)
+      flash[:alert] = "Sólo puedes editar tus propios recursos"
+      redirect_to worker_path(current_worker)
+    end
   end
 end
