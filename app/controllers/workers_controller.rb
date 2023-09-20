@@ -15,7 +15,6 @@ class WorkersController < ApplicationController
   def new
     @worker = Worker.new
     @departments = Department.all
-
   end
 
   def create

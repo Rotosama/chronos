@@ -1,6 +1,6 @@
 class VacationsController < ApplicationController
   before_action :set_worker
-  before_action :require_same_worker, only: [:edit, :update, :new, :create, :destroy]
+  before_action :require_same_worker
 
   def index
     @vacations = Vacation.all
