@@ -5,4 +5,10 @@ class Vacation < ApplicationRecord
   validates :start_time, presence: true, comparison: { greater_than_or_equal_to: Date.current.beginning_of_day }
   validates :end_time, presence: true, comparison: { greater_than_or_equal_to: :start_time }
   validates :description, presence: true
+
+
+  def approved?
+    status == 'Aprobado'
+  end
+
 end

@@ -4,9 +4,37 @@
     <div class="card <%= vacation.worker == @worker ? 'border-info' : 'border-warning' %> text-bg-light mb-3">
       <div class="card-header text-center">
         <i><%= vacation.worker.name.capitalize %></i>
-        <% if vacation.status == "Aprobado" %>
+        
+        <% if vacation.approved? %>
           <i class="bi bi-check-circle-fill text-success"></i>
+        <% elsif current_worker.admin? %>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Pendiente
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Elige una opción</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+              ¿Quieres aprobar estas vacaciones?
+                </div>
+                <div class="modal-footer justify-content-center">
+                  <%= link_to reject_worker_vacation_path(vacation.worker, vacation), data: { turbo_method: :patch } do %>
+                    <i class="bi bi-x-lg text-danger display-3 mx-2"></i>
+                  <% end %>
+                  <%= link_to approve_worker_vacation_path(vacation.worker, vacation), data: { turbo_method: :patch } do %>
+                    <i class="bi bi-check-lg text-success display-2 mx-2"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
+
       </div>
         <div class="card-body text-center">
           <strong><%= vacation.description %></strong>
@@ -30,8 +58,7 @@
 <% end %>
 
 <div class="d-flex justify-content-center">
-    <%= link_to new_worker_vacation_path(@worker), class: "btn btn-primary me-2" do %>
-      <i class="bi bi-calendar4-week"></i> Solicitar vacaciones
+    <%= link_to new_worker_vacation_path(@worker), class: "btn btn-outline-success me-2" do %>
+      <i class="bi bi-calendar4-week display-5"></i>
     <% end %>
-    <%= link_to "Volver", worker_path(@worker), class: "btn btn-secondary ms-2"%>
 </div>

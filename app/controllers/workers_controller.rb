@@ -1,7 +1,6 @@
 class WorkersController < ApplicationController
   before_action :set_worker, only: [:show, :edit, :update, :destroy]
-  before_action :require_same_worker, only: [:edit, :update, :destroy, :show]
-
+  before_action :require_same_worker
   def index
     @workers = Worker.all
     @departments = Department.all
@@ -21,6 +20,7 @@ class WorkersController < ApplicationController
     @departments = Department.all
     @worker = Worker.new(worker_params)
     if @worker.save
+      NotificationMailer.with(worker: @worker).welcome_email.deliver_later
       flash[:notice] = "El perfil se ha creado correctamente."
       redirect_to @worker
     else
@@ -45,11 +45,11 @@ class WorkersController < ApplicationController
   end
 
   def destroy
-    
     @worker.destroy
     flash[:notice] = "El trabajador se ha eliminado correctamente."
     redirect_to workers_path
   end
+
 
   private
 

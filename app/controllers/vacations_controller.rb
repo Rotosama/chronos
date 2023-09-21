@@ -45,6 +45,27 @@ class VacationsController < ApplicationController
     redirect_to worker_vacations_path(@worker)
   end
 
+  def approve
+    @vacation = Vacation.find(params[:id])
+    if current_worker.admin? 
+      @vacation.update(status: 'Aprobado')
+      redirect_to worker_vacations_path, notice: 'Vacaciones aprobadas exitosamente.'
+    else
+      redirect_to @vacation, alert: 'No tienes permiso para aprobar estas vacaciones.'
+    end
+  end
+  
+  def reject
+    @vacation = Vacation.find(params[:id])
+    if current_worker.admin? 
+      @vacation.update(status: 'Rechazado')
+      @vacation.destroy
+      redirect_to worker_vacations_path, notice: 'Vacaciones rechazadas exitosamente. Se procederá a borrarlas del calendario'
+    else
+      redirect_to worker_vacations_path, alert: 'No tienes permiso para rechazar estas vacaciones.'
+    end
+  end
+
   private
 
   def vacation_params

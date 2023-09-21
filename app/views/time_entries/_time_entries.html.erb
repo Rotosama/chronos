@@ -23,7 +23,7 @@
         </td>
         <td>
           <%= link_to edit_worker_time_entry_path(@worker, te), class: "text-decoration-none text-reset mx-2" do %>
-            <i class="bi bi-pencil-square text-primary"></i>
+            <i class="bi bi-pencil text-primary"></i>
           <% end %>
           <%= link_to worker_time_entry_path(@worker, te),
             data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" },

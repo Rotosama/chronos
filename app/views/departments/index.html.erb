@@ -1,18 +1,31 @@
-<h1 class= "my-5">Todos los departamentos</h1>
+
+<h1 class="my-5">Todos los departamentos</h1>
 
 <% @departments.each do |department| %>
-  <div class="card" >
-    <div class="card-header"><%= department.name.capitalize %></div>
-    <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-body-secondary">
-        <mark>
-          <%= "#{department.workers.count} #{'trabajador'.pluralize(department.workers.count)}" %>
-        </mark>
-      </h6>
-      <%= link_to "Modificar", edit_department_path(department), class: "btn btn-secondary" %>
-      <%= link_to "Eliminar departamento", department_path(department),data: { turbo_method: :delete}, class: "btn btn-danger" %>
+  <div class="col-md-8 mx-auto">
+    <div class="card mb-3">
+      <div class="card-header"><%= department.name.capitalize %></div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          <mark>
+            <%= "#{department.workers.count} #{'trabajador'.pluralize(department.workers.count)}" %>
+          </mark>
+        </h6>
+        <%= link_to edit_department_path(department), class: "btn btn-outline-primary" do %>
+          <i class="bi bi-house-gear"></i>
+        <% end %>
+        <%= link_to department_path(department), data: { turbo_method: :delete }, class: "btn btn-outline-danger" do %>
+          <i class="bi bi-house-dash"></i>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
 
-<%= link_to "Crear departamento", new_department_path, class: "btn btn-success my-5" %>
+<div class="row my-3 justify-content-center align-items-center">
+  <div class="col-2">
+    <%= link_to new_department_path, class: "btn btn-outline-success" do %>
+      <i class="bi bi-house-add display-5"></i>
+    <% end %>
+  </div>
+</div>

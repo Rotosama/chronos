@@ -1,4 +1,4 @@
-<h5 class="text-center"><%= @worker.name %> día: <%= @time_entry.entry_date.strftime("%d-%m-%Y") %></h5>
+<h5 class="text-center"><%= @worker.name.capitalize %> día: <%= @time_entry.entry_date.strftime("%d-%m-%Y") %></h5>
 <table class="table">
   <thead>
     <tr>
@@ -15,9 +15,15 @@
         <td><%= b.end_time.present? ? b.end_time.strftime("%H:%M:%S") : "-"  %></td>
         <td><%= b.comment %></td>
         <td>
-          <%= link_to "ver", worker_time_entry_break_path(@worker, @time_entry, b) %>
-          <%= link_to "Editar", edit_worker_time_entry_break_path(@worker, @time_entry, b) %>
-          <%= link_to "Borrar", worker_time_entry_break_path(@worker, @time_entry, b), data: { turbo_method: :delete } %>
+          <%= link_to worker_time_entry_break_path(@worker, @time_entry, b), class:"text-decoration-none text-reset" do %>
+            <i class="bi bi-eyeglasses mx-1 text-info"></i>
+          <% end %>
+          <%= link_to edit_worker_time_entry_break_path(@worker, @time_entry, b), class:"text-decoration-none text-reset" do %>
+            <i class="bi bi-pencil mx-1 text-primary"></i>
+          <% end %>
+          <%= link_to worker_time_entry_break_path(@worker, @time_entry, b), data: { turbo_method: :delete, turbo_confirm: "Estás seguro de borrar esa pausa?" } do %>
+            <i class="bi bi-trash3 mx-1 text-danger"></i>
+          <% end %>
         </td>
       </tr>
     <% end %>
