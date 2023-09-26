@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-  <% if @worker.admin? || @worker == current_worker %>
+  <% if current_worker.admin? || @worker == current_worker %>
     <% @time_entries.each do |te| %>
       <tr class= 'text-center'>
         <td><%= te.entry_date.strftime("%Y-%m-%d") %></td>
