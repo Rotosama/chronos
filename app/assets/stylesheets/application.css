@@ -53,3 +53,8 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
   }
+
+  .card-resume {
+    background: rgb(208,238,195);
+    background: linear-gradient(90deg, rgba(208,238,195,0.7) 40%, rgba(240,80,83,0.5) 100%); 
+  }

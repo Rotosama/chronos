@@ -1,5 +1,6 @@
 class BreaksController < ApplicationController
   before_action :set_worker, :set_time_entry
+  before_action :require_admin, only: [:edit, :update, :delete]
   
   def index
     @breaks = Break.where(time_entry_id: @time_entry.id)
@@ -33,7 +34,7 @@ class BreaksController < ApplicationController
       flash[:notice] = "Ha reanudado la jornada."
       redirect_to worker_time_entry_path(@worker)
     else
-      flash[:alert] = "No se pudo cerrar la jornada."
+      flash[:alert] = "No se pudo reanudar la jornada."
     end
   end
 
@@ -44,6 +45,8 @@ class BreaksController < ApplicationController
   def update
     @break = @time_entry.breaks.find(params[:id])
     if @break.update(break_params)
+      flash[:notice] = "Sus cambios han sido guardados."
+
       redirect_to worker_time_entries_path()
     else
       render :edit, status: :unprocessable_entity
@@ -53,6 +56,8 @@ class BreaksController < ApplicationController
   def destroy
     @break = Break.find(params[:id])
     @break.destroy
+    flash[:notice] = "Se eliminó la pausa correctamente."
+
     redirect_to worker_time_entry_breaks_path
   end
 
@@ -69,5 +74,12 @@ class BreaksController < ApplicationController
 
   def set_time_entry
     @time_entry = TimeEntry.find(params[:time_entry_id])
+  end
+
+  def require_admin
+    unless current_worker.admin?
+      flash[:alert] = "Sólo el administrador puede editar las pausas."
+      redirect_to worker_time_entry_breaks_path
+    end
   end
 end

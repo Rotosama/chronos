@@ -1,61 +1,68 @@
-<h1 class="text-center mb-5">Jornada día <%=Date.current.strftime("%d / %m / %Y")%></h1>
-
-<div class="d-flex justify-content-center align-items-center">
-  <% if @time_entry.entry_date.blank? %>
-    <%= link_to "Iniciar Jornada", worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :post }, class: "btn btn-primary" %>
-  <% elsif @time_entry.exit_date.blank? %>
-    <%= link_to new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-outline-warning mx-2" do %>
-      <i class="bi bi-pause-circle-fill display-2 mx-2"></i>
-    <% end %>
-     
-      <% if @time_entry.breaks.present? && @time_entry.breaks.last.start_time.present? && @time_entry.breaks.last.end_time.blank? %>
-        <%= link_to stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last),
-         data: { turbo_method: :patch }, class:"btn btn-outline-warning" do %>
-          <i class="bi bi-play-circle display-2 mx-2"></i>
-        <% end %>
-      <% end %>
-      
-    <%= link_to close_day_worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :patch, turbo_confirm: "Vas a cerrar la jornada"}, class: "btn btn-outline-danger mx-2" do %>
-      <i class="bi bi-stop-circle-fill display-2 mx-2"></i>
-    <% end %>
-  <% end %>
-</div>
-
-<div class="progress mt-5" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 60%"></div>
-</div>
-
-<div class="d-flex justify-content-center align-items-center">
-  <% if @time_entry.exit_date.blank? %>
-    <%= link_to new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-outline-warning mx-2" do %>
-      <i class="bi bi-pause-circle-fill display-2 mx-2"></i>
-    <% end %>
-     
-      <% if @time_entry.breaks.present? && @time_entry.breaks.last.start_time.present? && @time_entry.breaks.last.end_time.blank? %>
-        <%= link_to stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last),
-         data: { turbo_method: :patch }, class:"btn btn-outline-warning" do %>
-          <i class="bi bi-play-circle display-2 mx-2"></i>
-        <% end %>
-      <% end %>
-      
-    <%= link_to close_day_worker_time_entry_path(@worker, @time_entry), data: { turbo_method: :patch, turbo_confirm: "Vas a cerrar la jornada"}, class: "btn btn-outline-danger mx-2" do %>
-      <i class="bi bi-stop-circle-fill display-2 mx-2"></i>
-    <% end %>
-  <% end %>
-</div>
-
 <% if @time_entry.closed? %>
-      <ul>
-        <li><%= @time_entry.entry_date %></li>
-        <li><% @time_entry.breaks.each do |b| %>
+  <div class="card card-resume text-center mt-5">
+    <div class="card-header">
+      <h5>Resumen de la jornada <%= @time_entry.entry_date.strftime("%d/%m/%Y") %></h5>
+      <p class="text-body-secondary mt-2"><i><small><%= @time_entry.entry_date.strftime("Semana %U") %></small></i></p>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <i class="bi bi-box-arrow-in-right display-5 text-success me-2"></i>
+          <h4><strong><%= @time_entry.entry_date.strftime("%H:%M:%S") %></strong></h4>
+        </div>
+        <div class="col-md-6">
           <ul>
-            <li>b.start_time</li>
-            <li>b.end_time</li>
-          </ul>  
-          <% end %>
-        </li>
+            <% @time_entry.breaks.each do |b| %>
+              <div class="row my-3">
+                <div class="col-3 text-end">
+                  <i class="bi bi-pause-circle me-1"></i><%= b.start_time.strftime("%H:%M:%S") %>
+                </div>
+                <div class="col-3 text-center">
+                  <i class="bi bi-play-fill me-1"></i><%= b.end_time.strftime("%H:%M:%S") if b.end_time.present? %>
+                </div>
+                <div class="col-6 text-start">
+                  <i class="bi bi-chat-dots me-1"></i><%= b.comment %>
+                </div>
+              </div>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-box-arrow-in-right display-5 text-danger me-2"></i>
+          <h4><strong><%= @time_entry.exit_date.strftime("%H:%M:%S") %></strong></h4>
+        </div>
+      </div>
+      <%= link_to worker_path(@worker) do %>
+        <i class="bi bi-person-fill display-5 text-black"></i>
+      <% end %>
+    </div>
+    <div class="card-footer bg-secondary text-white">
+      Has trabajado <%= @time_entry.working_hours %> horas, !Enhorabuena!
+    </div>
+  </div>
 
-        <li><%= @time_entry.exit_date %></li>
-      </ul>
-  
-<% end %>
+  <% else %>
+
+    <div class="d-flex justify-content-center align-items-center">
+      <% if @time_entry.started? && !@time_entry.paused? %>
+        <%= link_to new_worker_time_entry_break_path(@worker, @time_entry), class:"btn btn-outline-warning mx-2" do %>
+          <i class="bi bi-pause-circle-fill display-2 mx-2"></i>
+        <% end %>
+        <%= link_to close_day_worker_time_entry_path(@worker, @time_entry), data: 
+          { turbo_method: :patch, turbo_confirm: "Vas a cerrar la jornada"}, class: "btn btn-outline-danger mx-2" do %>
+          <i class="bi bi-stop-circle-fill display-2 mx-2"></i>
+        <% end %>
+      <% end %>
+
+      <% if @time_entry.paused? %>
+        <%= link_to stop_pause_worker_time_entry_break_path(@worker, @time_entry, @time_entry.breaks.last),
+        data: { turbo_method: :patch }, class:"btn btn-outline-warning" do %>
+          <i class="bi bi-play-circle display-2 mx-2"></i><h2>Pausado</h2>
+        <% end %> 
+      <% end %>
+    </div>
+  <% end %>
+
+
+
+

@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <h1>Detalles del Trabajador</h1>
       <hr>
-<section class="vh-5" style="background-color: #f4f5f7;">
+<section class="vh-5">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-lg-10 mb-4 mb-lg-0">
@@ -18,7 +18,6 @@
               <%= link_to edit_worker_path(@worker) do %>
                 <i class="bi bi-person-gear text-white display-6"></i>
               <% end %>
-              <i class="far fa-edit mb-5"></i>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
@@ -34,10 +33,29 @@
                     <p class="text-muted"><%= @worker.dni %></p>
                   </div>
                   <div class="col-6 mb-3">
-                  <h6>Nacimiento</h6>
-                  <p class="text-muted"><%= @worker.birthdate %></p>
-                </div>
-                </div>
+                    <h6>Nacimiento</h6>
+                    <p class="text-muted"><%= @worker.birthdate %></p>
+                  </div>
+                  <h6>Acciones</h6>
+                  <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-12 mb-3">
+                    <h6>Ver fichajes:</h6>
+                    <%= link_to worker_time_entries_path(@worker), class: "btn btn-outline-info btn-block mb-2" do %>
+                      <i class="bi bi-calendar3"></i>
+                    <% end %>
+                  </div> 
+                  <% if current_worker == @worker %>
+                    <div class="col-6 mb-3">
+                      <h6>Iniciar Jornada:</h6>
+                      <%= link_to worker_time_entries_path(@worker), 
+                        data: { turbo_method: :post, turbo_confirm: "¿Vas ha iniciar tu jornada laboral?" }  do %>
+                          <i class="bi bi-play-fill display-5 text-success"></i>
+                      <% end %>
+                    </div>
+                    <% end %>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,34 +65,9 @@
     </div>
   </div>
 </section>
-
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col col-lg-10 text-center">
-        <%= link_to "Volver", workers_path, class: "btn btn-secondary btn-block" if current_worker.admin? %>
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Acciones</button>
-      </div>
-
-    </div>
-    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Acciones</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <div>
-          Bienvenido al panel del trabajador. Aquí puedes editar el trabajador. También puedes empezar la jornada y consultar los fichajes.
-        </div>
-        <div class="dropdown mt-3">
-          <div class="list-group">
-            <%= link_to new_worker_time_entry_path(@worker), class:"btn btn-success btn-block mb-2" do %>
-              <i class="bi bi-play-fill me-3"></i>Iniciar jornada
-          <% end %>
-            <%= link_to "Ver fichajes", worker_time_entries_path(@worker), class: "btn btn-info btn-block mb-2" %>
-            <%= link_to edit_worker_path(@worker), class: "btn btn-primary" do %>
-              <i class="bi bi-pen me-3"></i>Editar
-            <% end %>
-          </div>
-        </div>
-    </div>
+<div class="row d-flex justify-content-center align-items-center">
+  <div class="col col-lg-10 text-center">
+    <%= link_to "Volver", workers_path, class: "btn btn-secondary btn-block" if current_worker.admin? %>
+  </div>
 </div>
-
+    

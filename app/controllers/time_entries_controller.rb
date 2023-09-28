@@ -1,6 +1,7 @@
 class TimeEntriesController < ApplicationController
   before_action :set_worker
   before_action :require_same_worker
+  before_action :require_admin, only: [:edit, :update, :destroy]
 
   def index
     @time_entries = TimeEntry.where(worker_id: @worker.id)
@@ -16,7 +17,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
-    @time_entry = TimeEntry.new(time_entries_params)
+    @time_entry = TimeEntry.new
     @time_entry.worker_id = @worker.id
     @time_entry.entry_date = DateTime.now
     if @time_entry.save
@@ -33,7 +34,7 @@ class TimeEntriesController < ApplicationController
     @time_entry.exit_date = DateTime.now
     if @time_entry.save
       flash[:notice] = "Ha acabado la jornada."
-      redirect_to worker_time_entries_path(@worker)
+      redirect_to worker_time_entry_path(@worker, @time_entry)
     else
       flash[:alert] = "No se pudo cerrar la jornada."
     end
@@ -56,7 +57,7 @@ class TimeEntriesController < ApplicationController
   def destroy
     @time_entry = @worker.time_entries.find(params[:id]) 
     @time_entry.destroy
-    flash[:notice] = "Se eliminó la entrada de tiempo correctamente."
+    flash[:notice] = "Se eliminó la jornada correctamente."
     redirect_to worker_time_entries_path(@worker)
   end
   
@@ -69,6 +70,13 @@ class TimeEntriesController < ApplicationController
 
   def set_worker
     @worker = Worker.find(params[:worker_id])
+  end
+
+  def require_admin
+    unless current_worker.admin?
+      flash[:alert] = "Sólo el administrador puede editar las jornadas."
+      redirect_to worker_time_entry_path
+    end
   end
 
   def require_same_worker

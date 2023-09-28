@@ -1,6 +1,8 @@
 class WorkersController < ApplicationController
   before_action :set_worker, only: [:show, :edit, :update, :destroy]
   before_action :require_same_worker
+  before_action :require_admin, except: [:edit, :update, :show]
+
   def index
     @workers = Worker.all
     @departments = Department.all
@@ -64,7 +66,14 @@ class WorkersController < ApplicationController
 
   def require_same_worker
     unless current_worker && (current_worker == @worker || current_worker.admin?)
-      flash[:alert] = "Sólo puedes editar tus propios recursos"
+      flash[:alert] = "No tienes permiso para hacer eso."
+      redirect_to worker_path(current_worker)
+    end
+  end
+
+  def require_admin
+    unless current_worker.admin?
+      flash[:alert] = "Sólo el administrador puede hacer eso."
       redirect_to worker_path(current_worker)
     end
   end

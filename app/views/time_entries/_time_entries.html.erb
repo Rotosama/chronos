@@ -17,18 +17,26 @@
         <td><%= te.entry_date.strftime("%H:%M:%S") %></td>
         <td><%= te.exit_date.present? ? te.exit_date.strftime("%H:%M:%S") : "-" %></td>
         <td>
-          <%= link_to worker_time_entry_breaks_path(@worker, te) do %>
-            <i class="bi bi-pause-circle-fill text-warning"></i>
+          <% if te.breaks.present? %>
+            <%= link_to worker_time_entry_breaks_path(@worker, te) do %>
+              <i class="bi bi-pause-circle-fill text-warning"></i>
+            <% end %>
           <% end %>
         </td>
         <td>
-          <%= link_to edit_worker_time_entry_path(@worker, te), class: "text-decoration-none text-reset mx-2" do %>
-            <i class="bi bi-pencil text-primary"></i>
+          <%= link_to worker_time_entry_path(@worker, te), class: "text-decoration-none text-reset mx-2" do %>
+            <i class="bi bi-search"></i>
           <% end %>
-          <%= link_to worker_time_entry_path(@worker, te),
-            data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" },
-            class: "text-decoration-none text-reset mx-2" do %>
-             <i class="bi bi-trash-fill text-danger"></i>
+          <% if current_worker.admin? && te.closed? %>
+            <%= link_to edit_worker_time_entry_path(@worker, te), class: "text-decoration-none text-reset mx-2" do %>
+              <i class="bi bi-pencil text-primary"></i>
+            <% end %>
+
+            <%= link_to worker_time_entry_path(@worker, te),
+              data: { turbo_method: :delete, turbo_confirm: "¿Seguro?" },
+              class: "text-decoration-none text-reset mx-2" do %>
+              <i class="bi bi-trash-fill text-danger"></i>
+            <% end %>
           <% end %>
         </td>
       </tr>
