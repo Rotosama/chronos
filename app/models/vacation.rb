@@ -11,4 +11,9 @@ class Vacation < ApplicationRecord
     status == 'Aprobado'
   end
 
+  def first_day_vacation?
+    dates = (start_time.to_date..end_time.to_date).to_a
+    dates.first
+  end
+
 end
