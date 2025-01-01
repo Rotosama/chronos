@@ -32,7 +32,7 @@ class BreaksController < ApplicationController
     @break.end_time = Time.zone.now.change(day: @time_entry.entry_date.day)
     if @break.save
       flash[:notice] = "Ha reanudado la jornada."
-      redirect_to worker_time_entry_path(@worker)
+      redirect_to worker_time_entry_path(@worker, @time_entry)
     else
       flash[:alert] = "No se pudo reanudar la jornada."
     end
